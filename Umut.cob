@@ -10,9 +10,7 @@ select INPUT-FILE assign to dynamic input_file_name organization is line sequent
   
       
 
-data division.
-
-
+DATA DIVISION.
 FILE SECTION.
    FD INPUT-FILE.
    01 INPUT-DATA.
