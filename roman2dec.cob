@@ -77,8 +77,10 @@ display "   ROMAN NUMERAL CONVERSION"
 display " ---------------------------- "
 
 open input input-file.
-read input-file into input-data-record at end move zero to eof-switch.
-perform proc-body until eof-switch is equal to zero.
+read input-file into input-data-record 
+   at end move zero to eof-switch.
+perform proc-body 
+   until eof-switch is equal to zero.
 close input-file.
 
 display " ---------------------------- "
@@ -87,10 +89,10 @@ stop run.
 proc-body.
    move in-r in input-data-record to array-area.
    move 1 to n.
-   perform search-loop
+   perform search-loop 
       until r(n) is equal to space.
-         compute n = n - 1.
-   perform conv.
+   compute n = n - 1.
+   perform conversion.
    if switch is equal to 1
       move sum1 to v
       move array-area to out-r
@@ -103,7 +105,7 @@ search-loop.
    compute n = n + 1.
   
    
-conv.
+conversion.
    move zero to sum1.
    move 1001 to prev.
    move 1 to switch.
@@ -115,6 +117,7 @@ conv.
    
 
 conversion-loop.
+   *> added the correct math logic
    if r(i) is equal to "I"
       move 1 to d
       add d to sum1
