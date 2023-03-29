@@ -1,6 +1,7 @@
 identification division.
 program-id. roman-numeral-converter.
 *> program to convert roman numerals to their decimal equivalent
+*> updated from a given broken COBOL code
 
 environment division.
 
@@ -61,6 +62,7 @@ procedure division.
 display "This program will convert roman numerals to its' decimal equivalents."
 perform get_file_name.
 
+display " "
 display "   CONVERSION TABLE:"
 display "   i              1"
 display "   v              5"
@@ -75,13 +77,14 @@ display "   ROMAN NUMERAL CONVERSION"
 display " ---------------------------- "
 
 open input input-file.
-read input-file into input-data-record
-   at end move zero to eof-switch.
-perform proc-body
-   until eof-switch is equal to zero.
+read input-file into input-data at end move zero to eof-switch.
+perform proc-body until eof-switch is equal to zero.
 close input-file.
-display "  ---------------------------- "
+
+display " ---------------------------- "
 stop run.
+-
+
 proc-body.
    move in-r in input-data-record to array-area.
    move 1 to n.
@@ -177,6 +180,6 @@ get_file_name.
 
    *> if invalid file, keep prompting for one./
    if return-code not equal zero
-      display "File does not exist, please try again"
+      display "That file does not exist, please try again"
       perform get_file_name.
 
