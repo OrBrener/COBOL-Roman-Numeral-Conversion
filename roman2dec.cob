@@ -1,193 +1,182 @@
-IDENTIFICATION DIVISION.
-PROGRAM-ID. ROMAN-NUMERAL-CONVERTER.
-*> PROGRAM TO CONVERT ROMAN NUMERALS TO THEIR DECIMAL EQUIVALENT
+identification division.
+program-id. roman-numeral-converter.
+*> program to convert roman numerals to their decimal equivalent
 
-ENVIRONMENT DIVISION.
+environment division.
 
-INPUT-OUTPUT SECTION.
-FILE-CONTROL.
-select INPUT-FILE assign to dynamic input_file_name organization is line sequential.
-  
-      
+input-output section.
 
-DATA DIVISION.
-FILE SECTION.
-   FD INPUT-FILE.
-   01 INPUT-DATA.
-      02 IN-R      PIC X(15).
-    
-      
+*> fix file IO issue
+file-control.
+select input-file assign to dynamic input_file_name organization is line sequential.
 
+data division.
 
+file section.
+   fd input-file.
+   01 input-data.
+      02 in-r      pic x(15).
 
-WORKING-STORAGE SECTION.
+working-storage section.
 01 file-info.
-       05 file-size        pic x(8) comp-x.
-       05 file-date.
-          10 f-day         pic x comp-x.
-          10 f-month       pic x comp-x.
-          10 f-year        pic xx comp-x.
-       05 file-time.
-          10 f-hours       pic x comp-x.
-          10 f-minutes     pic x comp-x.
-          10 f-seconds     pic x comp-x.
-          10 f-hundredths  pic x comp-x.
+   05 file-size        pic x(8) comp-x.
+   05 file-date.
+      10 f-day         pic x comp-x.
+      10 f-month       pic x comp-x.
+      10 f-year        pic xx comp-x.
+   05 file-time.
+      10 f-hours       pic x comp-x.
+      10 f-minutes     pic x comp-x.
+      10 f-seconds     pic x comp-x.
+      10 f-hundredths  pic x comp-x.
+
 77 input_file_name  pic x(30).
-77 EOF-SWITCH   PIC 9    VALUE 1.
-77 SWITCH       PIC 9.
-77 N 	        PIC S9(2)  COMP.
-77 SUM1         PIC S9(8)  COMP.
-77 I            PIC S9(2)  COMP.
-77 PREV         PIC S9(4)  COMP.
-77 D            PIC S9(4)  COMP.
+77 eof-switch   pic 9    value 1.
+77 switch       pic 9.
+77 n 	        pic s9(2)  comp.
+77 sum1         pic s9(8)  comp.
+77 i            pic s9(2)  comp.
+77 prev         pic s9(4)  comp.
+77 d            pic s9(4)  comp.
 
-01 ARRAY-AREA.
-   02 R         PIC X(1)   OCCURS 16 TIMES.
-01 INPUT-DATA-RECORD.
-   02 IN-R      PIC X(15).
-   *> get rid of filler
-01 OUTPUT-TITLE-LINE.
-   02 FILLER    PIC X(28)  VALUE
-                    "  ROMAN NUMBER EQUIVALENTS  ". 
-01 OUTPUT-UNDERLINE-1.
-   02 FILLER    PIC X(30)  VALUE
-                    "------------------------------". 
-01 OUTPUT-COLUMN-HEADINGS.
-   02 FILLER    PIC X(14)  VALUE
-                    "  ROMAN NUMBER". 
-   02 FILLER    PIC X(16)  VALUE
-                    "     DEC. EQUIV.". 
-01 OUTPUT-UNDERLINE-2.
-   02 FILLER    PIC X(30)  VALUE
-                    " ---------------------------- ". 
-01 OUTPUT-TABLE-RECORD.
-   02 FILLER    PIC X      VALUE SPACE.
-   02 OUT-R     PIC X(15).
-   02 FILLER    PIC X(3)   VALUE SPACES.
-   02 V         PIC Z(9).
-01 OUTPUT-ERROR-MESS.
-   02 FILLER    PIC X      VALUE SPACE.
-   02 OUT-ER-R  PIC X(15).
-   02 FILLER    PIC X(24)  VALUE
-                    "   ILLEGAL ROMAN NUMERAL". 
-  
-PROCEDURE DIVISION.
+01 array-area.
+   02 r         pic x(1)   occurs 16 times.
+01 input-data-record.
+   02 in-r      pic x(15).
+   *> get rid of filler 
+01 output-table-record.
+   02 filler    pic x      value space.
+   02 out-r     pic x(15).
+   02 filler    pic x(3)   value spaces.
+   02 v         pic z(9).
+01 output-error-mess.
+   02 filler    pic x      value space.
+   02 out-er-r  pic x(15).
+   02 filler    pic x(24)  value "   illegal roman numeral". 
 
 
-PERFORM get_file_name.
+
+procedure division.
+
+perform get_file_name.
+
+display "CONVERSION TABLE:"
+display "i              1"
+display "v              5"
+display "x              10"
+display "l              50"
+display "c              100"
+display "d              500"
+display "m              1000"
 display " "
-OPEN INPUT INPUT-FILE.
 display "------------------------------"
-display " ROMAN NUMBER CONVERSION."
+display "ROMAN NUMERAL CONVERSION"
 display " ---------------------------- "
-display " conversion table value roman to decimal"
-display " I = 1 "
-display " V = 5"
-display " X = 10"
-display " L = 50"
-display " C = 100"
-display " D = 500"
-display " M = 1000"
 
-READ INPUT-FILE INTO INPUT-DATA-RECORD
-   AT END MOVE ZERO TO EOF-SWITCH.
-PERFORM PROC-BODY
-   UNTIL EOF-SWITCH IS EQUAL TO ZERO.
-CLOSE INPUT-FILE.
+open input input-file.
+read input-file into input-data-record
+   at end move zero to eof-switch.
+perform proc-body
+   until eof-switch is equal to zero.
+close input-file.
 display "  ---------------------------- "
-STOP RUN.
-PROC-BODY.
-   MOVE IN-R IN INPUT-DATA-RECORD TO ARRAY-AREA.
-   MOVE 1 TO N.
-   PERFORM SEARCH-LOOP
-      UNTIL R(N) IS EQUAL TO SPACE.
-         compute N = N - 1.
-   PERFORM CONV.
-   IF SWITCH IS EQUAL TO 1
-      MOVE SUM1 TO V
-      MOVE ARRAY-AREA TO OUT-R
-      display OUTPUT-TABLE-RECORD
+stop run.
+proc-body.
+   move in-r in input-data-record to array-area.
+   move 1 to n.
+   perform search-loop
+      until r(n) is equal to space.
+         compute n = n - 1.
+   perform conv.
+   if switch is equal to 1
+      move sum1 to v
+      move array-area to out-r
+      display output-table-record
    end-if.
-   READ INPUT-FILE INTO INPUT-DATA-RECORD
-     AT END MOVE ZERO TO EOF-SWITCH.
+   read input-file into input-data-record
+     at end move zero to eof-switch.
 
-SEARCH-LOOP.
-   compute N = N + 1.
+search-loop.
+   compute n = n + 1.
   
    
-CONV.
-   MOVE ZERO TO SUM1.
-   MOVE 1001 TO PREV.
-   MOVE 1 TO SWITCH.
-   PERFORM CONVERSION-LOOP
-      VARYING I FROM 1 BY 1
-      UNTIL I IS GREATER THAN N OR
-         SWITCH IS EQUAL TO 2.
+conv.
+   move zero to sum1.
+   move 1001 to prev.
+   move 1 to switch.
+   perform conversion-loop
+      varying i from 1 by 1
+      until i is greater than n or
+         switch is equal to 2.
 
    
 
-CONVERSION-LOOP.
-   IF R(I) IS EQUAL TO "I"
-      MOVE 1 TO D
+conversion-loop.
+   if r(i) is equal to "i"
+      move 1 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   ELSE IF R(I) IS EQUAL TO "V"
-      MOVE 5 TO D
+   else if r(i) is equal to "v"
+      move 5 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   ELSE IF R(I) IS EQUAL TO "X"
-      MOVE 10 TO D
+   else if r(i) is equal to "x"
+      move 10 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   ELSE IF R(I) IS EQUAL TO "L"
-      MOVE 50 TO D
+   else if r(i) is equal to "l"
+      move 50 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   ELSE IF R(I) IS EQUAL TO "C"
-      MOVE 100 TO D
+   else if r(i) is equal to "c"
+      move 100 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   ELSE IF R(I) IS EQUAL TO "D"
-      MOVE 500 TO D
+   else if r(i) is equal to "d"
+      move 500 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   ELSE IF R(I) IS EQUAL TO "M"
-      MOVE 1000 TO D
+   else if r(i) is equal to "m"
+      move 1000 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   ELSE MOVE 2 TO SWITCH
-        MOVE ARRAY-AREA TO OUT-ER-R
-        display OUTPUT-ERROR-MESS 
+   else move 2 to switch
+        move array-area to out-er-r
+        display output-error-mess 
    end-if.
  
 
 get_file_name.
- display "Welcome to the Roman Numeral Conversion:"
- display " Enter Filename to Convert "
-    Accept input_file_name from Console.
-    call "CBL_CHECK_FILE_EXIST" using input_file_name file-info.
-    if return-code not equal zero
-        display "Error: File " input_file_name(1:20) " does not exist"
-         PERFORM get_file_name.
+   display "This program will convert roman numerals to its' decimal equivalents."
+   display "Please enter the filename for conversion:"
+   accept input_file_name from console.
+
+   *> check if it is a valid file
+   call "CBL_CHECK_FILE_EXIST" using input_file_name file-info.
+
+   *> if invalid file, keep prompting for one./
+   if return-code not equal zero
+      display "File does not exist, please try again"
+      perform get_file_name.
 
