@@ -127,49 +127,49 @@ conv.
    
 
 conversion-loop.
-   if r(i) is equal to "i"
+   if r(i) is equal to "I"
       move 1 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "v"
+   else if r(i) is equal to "V"
       move 5 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "x"
+   else if r(i) is equal to "X"
       move 10 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "l"
+   else if r(i) is equal to "L"
       move 50 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "c"
+   else if r(i) is equal to "C"
       move 100 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "d"
+   else if r(i) is equal to "D"
       move 500 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "m"
+   else if r(i) is equal to "M"
       move 1000 to d
       add d to sum1
       if d > prev

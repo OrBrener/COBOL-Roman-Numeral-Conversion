@@ -58,19 +58,20 @@ working-storage section.
 
 procedure division.
 
+display "This program will convert roman numerals to its' decimal equivalents."
 perform get_file_name.
-
-display "CONVERSION TABLE:"
-display "i              1"
-display "v              5"
-display "x              10"
-display "l              50"
-display "c              100"
-display "d              500"
-display "m              1000"
+./
+display "   CONVERSION TABLE:"
+display "   i              1"
+display "   v              5"
+display "   x              10"
+display "   l              50"
+display "   c              100"
+display "   d              500"
+display "   m              1000"
 display " "
 display "------------------------------"
-display "ROMAN NUMERAL CONVERSION"
+display "   ROMAN NUMERAL CONVERSION"
 display " ---------------------------- "
 
 open input input-file.
@@ -112,49 +113,49 @@ conv.
    
 
 conversion-loop.
-   if r(i) is equal to "i"
+   if r(i) is equal to "I"
       move 1 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "v"
+   else if r(i) is equal to "V"
       move 5 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "x"
+   else if r(i) is equal to "X"
       move 10 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "l"
+   else if r(i) is equal to "L"
       move 50 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "c"
+   else if r(i) is equal to "C"
       move 100 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "d"
+   else if r(i) is equal to "D"
       move 500 to d
       add d to sum1
       if d > prev
          compute sum1 = sum1 - 2 * prev
       end-if
       move d to prev
-   else if r(i) is equal to "m"
+   else if r(i) is equal to "M"
       move 1000 to d
       add d to sum1
       if d > prev
@@ -168,7 +169,6 @@ conversion-loop.
  
 
 get_file_name.
-   display "This program will convert roman numerals to its' decimal equivalents."
    display "Please enter the filename for conversion:"
    accept input_file_name from console.
 
