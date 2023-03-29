@@ -9,7 +9,8 @@ input-output section.
 
 *> fix file IO issue
 file-control.
-select input-file assign to dynamic input_file_name organization is line sequential.
+select input-file assign to dynamic input_file_name 
+   organization is line sequential.
 
 data division.
 
@@ -60,17 +61,30 @@ working-storage section.
 procedure division.
 
 display "This program will convert roman numerals to its' decimal equivalents."
-perform get_file_name.
+perform get-input-file.
 
 display " "
+display "
+ /$$$$$$$                                                    /$$   /$$                         /$$                                  /$$$$$$                                                      /$$                        
+| $$__  $$                                                  | $$$ | $$                        | $$                                 /$$__  $$                                                    | $$                        
+| $$  \ $$  /$$$$$$  /$$$$$$/$$$$   /$$$$$$  /$$$$$$$       | $$$$| $$ /$$   /$$ /$$$$$$/$$$$ | $$$$$$$   /$$$$$$   /$$$$$$       | $$  \__/  /$$$$$$  /$$$$$$$  /$$    /$$ /$$$$$$   /$$$$$$  /$$$$$$    /$$$$$$   /$$$$$$ 
+| $$$$$$$/ /$$__  $$| $$_  $$_  $$ |____  $$| $$__  $$      | $$ $$ $$| $$  | $$| $$_  $$_  $$| $$__  $$ /$$__  $$ /$$__  $$      | $$       /$$__  $$| $$__  $$|  $$  /$$//$$__  $$ /$$__  $$|_  $$_/   /$$__  $$ /$$__  $$
+| $$__  $$| $$  \ $$| $$ \ $$ \ $$  /$$$$$$$| $$  \ $$      | $$  $$$$| $$  | $$| $$ \ $$ \ $$| $$  \ $$| $$$$$$$$| $$  \__/      | $$      | $$  \ $$| $$  \ $$ \  $$/$$/| $$$$$$$$| $$  \__/  | $$    | $$$$$$$$| $$  \__/
+| $$  \ $$| $$  | $$| $$ | $$ | $$ /$$__  $$| $$  | $$      | $$\  $$$| $$  | $$| $$ | $$ | $$| $$  | $$| $$_____/| $$            | $$    $$| $$  | $$| $$  | $$  \  $$$/ | $$_____/| $$        | $$ /$$| $$_____/| $$      
+| $$  | $$|  $$$$$$/| $$ | $$ | $$|  $$$$$$$| $$  | $$      | $$ \  $$|  $$$$$$/| $$ | $$ | $$| $$$$$$$/|  $$$$$$$| $$            |  $$$$$$/|  $$$$$$/| $$  | $$   \  $/  |  $$$$$$$| $$        |  $$$$/|  $$$$$$$| $$      
+|__/  |__/ \______/ |__/ |__/ |__/ \_______/|__/  |__/      |__/  \__/ \______/ |__/ |__/ |__/|_______/  \_______/|__/             \______/  \______/ |__/  |__/    \_/    \_______/|__/         \___/   \_______/|__/      
+                                                                                                                                                                                                                            
+                                                                                                                                                                                                                            
+                                                                                                                                                                                                                            
+"
 display "   CONVERSION TABLE:"
-display "   i              1"
-display "   v              5"
-display "   x              10"
-display "   l              50"
-display "   c              100"
-display "   d              500"
-display "   m              1000"
+display "   I              1"
+display "   V              5"
+display "   X              10"
+display "   L              50"
+display "   C              100"
+display "   D              500"
+display "   M              1000"
 display " "
 display " ------------------------------"
 display "   ROMAN NUMERAL CONVERSION"
@@ -85,6 +99,18 @@ close input-file.
 
 display " ---------------------------- "
 stop run.
+
+get-input-file.
+   display "Please enter the filename for conversion:"
+   accept input_file_name from console.
+
+   *> check if it is a valid file
+   call "CBL_CHECK_FILE_EXIST" using input_file_name file-info.
+
+   *> if invalid file, keep prompting for one./
+   if return-code not equal zero
+      display "That file does not exist, please try again"
+      perform get-input-file.
 
 proc-body.
    move in-r in input-data-record to array-area.
@@ -114,7 +140,6 @@ conversion.
       until i is greater than n or
          switch is equal to 2.
 
-   
 
 conversion-loop.
    *> added the correct math logic
@@ -171,17 +196,3 @@ conversion-loop.
         move array-area to out-er-r
         display output-error-mess 
    end-if.
- 
-
-get_file_name.
-   display "Please enter the filename for conversion:"
-   accept input_file_name from console.
-
-   *> check if it is a valid file
-   call "CBL_CHECK_FILE_EXIST" using input_file_name file-info.
-
-   *> if invalid file, keep prompting for one./
-   if return-code not equal zero
-      display "That file does not exist, please try again"
-      perform get_file_name.
-
