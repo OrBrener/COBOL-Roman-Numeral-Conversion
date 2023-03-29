@@ -60,7 +60,7 @@ procedure division.
 
 display "This program will convert roman numerals to its' decimal equivalents."
 perform get_file_name.
-./
+
 display "   CONVERSION TABLE:"
 display "   i              1"
 display "   v              5"
@@ -70,7 +70,7 @@ display "   c              100"
 display "   d              500"
 display "   m              1000"
 display " "
-display "------------------------------"
+display " ------------------------------"
 display "   ROMAN NUMERAL CONVERSION"
 display " ---------------------------- "
 
