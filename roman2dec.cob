@@ -1,5 +1,5 @@
 IDENTIFICATION DIVISION.
-PROGRAM-ID. ROMAN-NUMERAL.
+PROGRAM-ID. ROMAN-NUMERAL-CONVERTER.
 *> PROGRAM TO CONVERT ROMAN NUMERALS TO THEIR DECIMAL EQUIVALENT
 
 ENVIRONMENT DIVISION.
@@ -9,32 +9,9 @@ FILE-CONTROL.
 select INPUT-FILE assign to dynamic input_file_name organization is line sequential.
   
       
-
-data division.
-
-
-FILE SECTION.
-   FD INPUT-FILE.
-   01 INPUT-DATA.
-      02 IN-R      PIC X(15).
-    
-      
-
-
+DATA DIVISION.
 
 WORKING-STORAGE SECTION.
-01 file-info.
-       05 file-size        pic x(8) comp-x.
-       05 file-date.
-          10 f-day         pic x comp-x.
-          10 f-month       pic x comp-x.
-          10 f-year        pic xx comp-x.
-       05 file-time.
-          10 f-hours       pic x comp-x.
-          10 f-minutes     pic x comp-x.
-          10 f-seconds     pic x comp-x.
-          10 f-hundredths  pic x comp-x.
-77 input_file_name  pic x(30).
 77 EOF-SWITCH   PIC 9    VALUE 1.
 77 SWITCH       PIC 9.
 77 N 	        PIC S9(2)  COMP.
