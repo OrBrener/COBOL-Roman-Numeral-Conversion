@@ -14,9 +14,9 @@ select input-file assign to dynamic input_file_name organization is line sequent
 data division.
 
 file section.
-   fd input-file.
-   01 input-data.
-      02 in-r      pic x(15).
+fd input-file.
+01 input-data.
+   02 in-r      pic x(15).
 
 working-storage section.
 01 file-info.
@@ -77,13 +77,12 @@ display "   ROMAN NUMERAL CONVERSION"
 display " ---------------------------- "
 
 open input input-file.
-read input-file into input-data at end move zero to eof-switch.
+read input-file into input-data-record at end move zero to eof-switch.
 perform proc-body until eof-switch is equal to zero.
 close input-file.
 
 display " ---------------------------- "
 stop run.
--
 
 proc-body.
    move in-r in input-data-record to array-area.
